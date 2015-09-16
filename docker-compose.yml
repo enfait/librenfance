@@ -1,0 +1,19 @@
+web:
+  image: moonscale/runner-drupal
+  ports:
+    - 7000:80
+  volumes:
+    - ./compose/local/web/conf/conf-maxexec.ini:usr/local/etc/php/conf.d/conf-maxexec.ini:ro
+    - ./www:/var/www/html
+  links:
+    - mysql:mysql
+
+mysql:
+  image: mysql:5.6
+  environment:
+    MYSQL_ROOT_PASSWORD: rootpw
+    MYSQL_USER: drupal
+    MYSQL_PASSWORD: userpw
+    MYSQL_DATABASE: drupal
+  volumes:
+    - ./compose/local/mysql/data:/var/lib/mysql
